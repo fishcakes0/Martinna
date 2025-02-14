@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Song for You</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Body styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to bottom, #003366, #000080); /* Dark Navy Blue */
+            color: #fff; /* White text for contrast */
+            text-align: center;
+            padding: 5% 10%;
+            position: relative;
+            overflow: auto;
+        }
+
+        h1 {
+            color: #ADD8E6; /* Light Sky Blue for header text */
+            font-size: 3.5em;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 3s ease-in-out;
+        }
+
+        p {
+            font-size: 1.5em;
+            font-weight: 600;
+            font-style: italic;
+            margin-bottom: 30px;
+            color: #B0C4DE; /* Light Steel Blue for text */
+            animation: fadeIn 3s ease-in-out;
+        }
+
+        .heart {
+            font-size: 5em;
+            color: #00B4D8; /* Ocean blue for heart */
+            animation: heartBeat 1.5s infinite;
+        }
+
+        /* Card Styling */
+        .card {
+            background-color: rgba(255, 255, 255, 0.85); /* Light sea foam */
+            color: #003366; /* Dark navy blue text */
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.1);
+            max-width: 700px;
+            margin: 20px auto;
+            font-size: 1.3em;
+            font-weight: 600;
+            font-style: italic;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        /* Game Grid */
+        .game-container {
+            display: grid;
+            grid-template-columns: repeat(3, 150px);
+            grid-gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .game-card {
+            width: 150px;
+            height: 150px;
+            background-color: #B2EBF2; /* Light turquoise for card background */
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 2em;
+            color: transparent;
+            position: relative;
+            box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .game-card.show {
+            color: #fff;
+            background-color: #00B4D8; /* Deep turquoise when flipped */
+        }
+
+        .game-card.matched {
+            background-color: #80E4D7; /* Seafoam green for matched cards */
+        }
+
+        .game-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes heartBeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <h1>A Little Game And A Song For Youu!</h1>
+    <p>Good morning Sleepyhead! 💖</p>
+    <div class="heart">❤️</div>
+
+    <!-- Spotify Player Embed -->
+    <div class="audio-player">
+        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/6aka4wYLwW0wH2qjxleJWG?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    </div>
+
+    <p>Press play, and solve the game below 🎶💫</p>
+    <p>I love youu 😘💖</p>
+
+    <!-- Card for Customizable Text -->
+    <div class="card">
+        <p>This just a silly thing i made! WARNING FIRST! 🌙💖</p>
+    </div>
+
+    <!-- Memory Match Game -->
+    <div class="game-container">
+        <!-- Cards with matching images -->
+        <div class="game-card" data-card="1"></div>
+        <div class="game-card" data-card="1"></div>
+        <div class="game-card" data-card="2"></div>
+        <div class="game-card" data-card="2"></div>
+        <div class="game-card" data-card="3"></div>
+        <div class="game-card" data-card="3"></div>
+    </div>
+
+    <script>
+        const cards = document.querySelectorAll('.game-card');
+        let flippedCards = [];
+        let matchedCards = 0;
+
+        // Function to shuffle the cards
+        function shuffleCards() {
+            cards.forEach(card => {
+                const randomPos = Math.floor(Math.random() * cards.length);
+                card.style.order = randomPos;
+            });
+        }
+
+        // Set images for each card when flipped
+        cards.forEach(card => {
+            card.addEventListener('click', () => {
+                if (flippedCards.length < 2 && !card.classList.contains('show') && !card.classList.contains('matched')) {
+                    card.classList.add('show');
+                    let imgUrl = '';
+
+                    // Assign different images for each card pair
+                    if (card.dataset.card === '1') {
+                        imgUrl = 'https://images.immediate.co.uk/production/volatile/sites/3/2024/09/arcane-netflix-season-2-Cropped-36b6196.jpg?quality=90&webp=true&resize=775,517'; // First image
+                    } else if (card.dataset.card === '2') {
+                        imgUrl = 'https://helios-i.mashable.com/imagery/articles/07hBnD9hrn1KAdJaUcTkdzW/hero-image.fill.size_1248x702.v1673988697.jpg'; // Second image
+                    } else if (card.dataset.card === '3') {
+                        imgUrl = 'https://preview.redd.it/no-spoilers-this-must-be-the-most-cursed-shot-in-the-entire-v0-yyol2rudgi8c1.jpeg?auto=webp&s=398cad55e447a8aa11aa8399e27e4d1e7950e9aa'; // Third image
+                    }
+
+                    // Show image on card
+                    card.innerHTML = `<img src="${imgUrl}" alt="Image">`;
+                    flippedCards.push(card);
+
+                    if (flippedCards.length === 2) {
+                        // Check if the cards match
+                        if (flippedCards[0].dataset.card === flippedCards[1].dataset.card) {
+                            flippedCards[0].classList.add('matched');
+                            flippedCards[1].classList.add('matched');
+                            matchedCards += 2;
+                            flippedCards = [];
+
+                            if (matchedCards === cards.length) {
+                                alert("Congratulations! You've matched all the cards!");
+                            }
+                        } else {
+                            setTimeout(() => {
+                                flippedCards[0].classList.remove('show');
+                                flippedCards[1].classList.remove('show');
+                                flippedCards[0].innerHTML = '';
+                                flippedCards[1].innerHTML = '';
+                                flippedCards = [];
+                            }, 1000);
+                        }
+                    }
+                }
+            });
+        });
+
+        // Shuffle cards when the page loads
+        shuffleCards();
+    </script>
+</body>
+</html>
